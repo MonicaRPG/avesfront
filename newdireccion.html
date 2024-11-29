@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+
+<body>
+    <h1> Registro de nueva direccion</h1>
+    <form id="guardar" action="">
+        Estado: <input type="text" id="estado" >
+        <br>
+        Departamento: <input type="text" name="departamento" id="departamento" >
+        <br>
+        Ciudad: <input type="text" name="ciudad" id="ciudad" >
+        <br>
+        Localidad: <input type="text" name="localidad" id="localidad" >
+        <br>
+        Numero: <input type="text" name="numero" id="numero" >
+        <br>
+        Pais: <input type="text" name="pais" id="pais" >
+        <br>
+        Tipo via: <input type="text" name="tipo_via" id="tipo_via" >
+        <br>
+        Barrio: <input type="text"  name="barrio" id="barrio" >
+        <br>
+        <button type="submit" >
+            Guardar Direccion
+        </button>
+    </form>
+    <script>
+        document.querySelector("#guardar").addEventListener("submit", async(evt)=> {
+            evt.preventDefault()
+            window.alert("desea guardar")
+            document.querySelector("#departamento").value
+            console.log(document.querySelector("#departamento").value)
+            const data = {
+                departamento:document.querySelector("#departamento").value,
+                estado: document.querySelector("#estado").value,
+                ciudad: document.querySelector("#ciudad").value,
+                localidad: document.querySelector("#localidad").value,
+                numero: document.querySelector("#numero").value,
+                pais: document.querySelector("#pais").value,
+                tipoVia:document.querySelector("#tipo_via").value,
+                barrio: document.querySelector("#barrio").value
+            }
+            const response = await fetch("http://localhost:8080/direccion" ,
+                {
+                    method:'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body:JSON.stringify(
+                        data
+                    )
+                })
+
+            console.log(data)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+           console.log( response.json());
+
+
+
+
+        })
+    </script>
+
+</body>
+</html>
