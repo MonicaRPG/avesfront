@@ -11,7 +11,7 @@
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
             //console.log(id)
-            const response = await fetch(`http://localhost:8080/direccion/${id}` ,
+            const response = await fetch(`http://localhost:8088/direccion/${id}` ,
                 {
                     method:'DELETE',
                 })

@@ -88,7 +88,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="singlebutton"></label>
                 <div class="col-md-4">
-                    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Actualizar</button>
+                    <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
 
@@ -107,7 +107,7 @@
                 tipoVia:document.querySelector("#tipovia").value,
                 barrio: document.querySelector("#barrio").value
             }
-            const response = await fetch("http://localhost:8080/direccion" ,
+            const response = await fetch("http://localhost:8088/direccion" ,
                 {
                     method:'POST',
                     headers: {
