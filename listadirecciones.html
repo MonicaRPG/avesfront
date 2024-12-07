@@ -1,0 +1,67 @@
+<html>
+<head>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<h1>Lista de direcciones</h1>
+</body>
+<a href="newdireccion.html">
+    Nueva Direccion
+</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Pais</th>
+                <th>Departamento</th>
+                <th>Localidad</th>
+                <th>Numero</th>
+                <th>Barrio</th>
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo">
+
+        </tbody>
+    </table>
+    <script>
+
+        async function request(){
+            const response = await fetch("http://localhost:8080/direccion" ,
+                {
+                    method:'GET',
+                })
+
+            //console.log(data)
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            data = await response.json()
+            console.log( data);
+            let linea = ''
+            data.forEach((dir)=> {
+
+                linea += `<tr>
+                      <td>${ dir.pais } </td>
+                      <td>${ dir.departamento }</td>
+                      <td>${ dir.localidad }</td>
+                      <td>${ dir.numero }</td>
+                      <td>${ dir.barrio }</td>
+                      <td>
+                            <a href="update.html?id=${dir.id}" >Actualizar</a>
+                      </td>
+                       <td>
+                            <a href="delete.html?id=${dir.id}" >Borrar</a>
+                      </td>
+                </tr>`
+            })
+            let cuerpo = document.querySelector("#cuerpo")
+            console.log(cuerpo)
+            cuerpo.innerHTML = linea
+        }
+
+        request()
+
+    </script>
+
+</html>

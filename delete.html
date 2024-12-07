@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrar</title>
+</head>
+<body>
+
+    <script>
+        async function borrar(){
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            //console.log(id)
+            const response = await fetch(`http://localhost:8080/direccion/${id}` ,
+                {
+                    method:'DELETE',
+                })
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }else{
+                console.log("registro borrado")
+            }
+            window.location.href="listadirecciones.html"
+        }
+
+        borrar()
+    </script>
+</body>
+</html>

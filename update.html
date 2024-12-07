@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nueva Direccion</title>
+    <title>Update Direccion</title>
     <link rel="stylesheet" href="bootstrap.css">
 </head>
-
 <body>
-
-    <form id="guardar" class="form-horizontal"  action="">
+    <form id="update" class="form-horizontal" >
+        <input type="hidden" id="id" />
         <fieldset>
 
             <!-- Form Name -->
-            <legend>Nueva Direccion</legend>
+            <legend>Actualizar Direccion</legend>
 
             <!-- Text input-->
             <div class="form-group">
@@ -94,41 +93,65 @@
 
         </fieldset>
     </form>
+
     <script>
-        document.querySelector("#guardar").addEventListener("submit", async(evt)=> {
-            evt.preventDefault()
-            const data = {
-                departamento:document.querySelector("#departamento").value,
-                estado: document.querySelector("#estado").value,
-                ciudad: document.querySelector("#ciudad").value,
-                localidad: document.querySelector("#localidad").value,
-                numero: document.querySelector("#numero").value,
-                pais: document.querySelector("#pais").value,
-                tipoVia:document.querySelector("#tipovia").value,
-                barrio: document.querySelector("#barrio").value
-            }
-            const response = await fetch("http://localhost:8080/direccion" ,
-                {
-                    method:'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body:JSON.stringify(
-                        data
-                    )
-                })
 
-            console.log(data)
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+         async function presentar(){
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('id');
+                //console.log(id)
 
-            window.location.href="listadirecciones.html"
+                 const response = await fetch(`http://localhost:8080/direccion/${id}` ,
+                     {
+                         method:'GET',
+                     })
+             //console.log(data)
+             if (!response.ok) {
+                 throw new Error(`HTTP error! status: ${response.status}`);
+             }
+             updDireccion = await response.json()
+             //console.log( data);
+             document.querySelector("#estado").value = updDireccion.estado
+             document.querySelector("#departamento").value = updDireccion.departamento
+             document.querySelector("#ciudad").value = updDireccion.ciudad
+             document.querySelector("#localidad").value = updDireccion.localidad
+             document.querySelector("#numero").value = updDireccion.numero
+             document.querySelector("#pais").value = updDireccion.pais
+             document.querySelector("#tipovia").value = updDireccion.tipo_via
+             document.querySelector("#barrio").value = updDireccion.barrio
+             document.querySelector("#id").value = updDireccion.id
+
+        }
+
+        presentar()
+
+         document.querySelector("#update").addEventListener("submit", async(evt)=> {
+             evt.preventDefault()
+             const data = {
+                 departamento:document.querySelector("#departamento").value,
+                 estado: document.querySelector("#estado").value,
+                 ciudad: document.querySelector("#ciudad").value,
+                 localidad: document.querySelector("#localidad").value,
+                 numero: document.querySelector("#numero").value,
+                 pais: document.querySelector("#pais").value,
+                 tipoVia:document.querySelector("#tipovia").value,
+                 barrio: document.querySelector("#barrio").value
+             }
+             const id = document.querySelector("#id").value
+             const response = await fetch(`http://localhost:8080/direccion/${id}` ,
+                 {
+                     method:'PUT',
+                     headers: {
+                         "Content-Type": "application/json",
+                     },
+                     body:JSON.stringify(
+                         data
+                     )
+                 })
+             window.location.href="listadirecciones.html"
+         } )
 
 
-
-
-        })
     </script>
 
 </body>
